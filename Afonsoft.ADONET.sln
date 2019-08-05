@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29102.190
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Afonsoft.ADONET", "Afonsoft.ADONET\Afonsoft.ADONET.csproj", "{5F0B63CA-6274-40F5-90C5-ED7D2C8B07E9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ADOTest", "ADOTest\ADOTest.csproj", "{A605E456-DB24-4706-B853-E53DB5499E05}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{5F0B63CA-6274-40F5-90C5-ED7D2C8B07E9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5F0B63CA-6274-40F5-90C5-ED7D2C8B07E9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5F0B63CA-6274-40F5-90C5-ED7D2C8B07E9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5F0B63CA-6274-40F5-90C5-ED7D2C8B07E9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A605E456-DB24-4706-B853-E53DB5499E05}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A605E456-DB24-4706-B853-E53DB5499E05}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A605E456-DB24-4706-B853-E53DB5499E05}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A605E456-DB24-4706-B853-E53DB5499E05}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {7A410B95-6C6B-4B68-AE2C-6CFC9D6F38DA}
+	EndGlobalSection
+EndGlobal

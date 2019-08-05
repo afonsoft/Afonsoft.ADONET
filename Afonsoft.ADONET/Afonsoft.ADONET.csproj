@@ -1,0 +1,52 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFrameworks>netstandard2.0;Net47</TargetFrameworks>
+    <AssemblyName>Afonsoft.ADONET</AssemblyName>
+    <Authors>Afonso Dutra Nogueira Filho</Authors>
+    <Company>Afonsoft</Company>
+    <Copyright>afonsoft</Copyright>
+    <RepositoryType>git</RepositoryType>
+    <PackageTags>ADO.NET, SQLite, MySQL, Oracle, SQLServer, PostgreSQL</PackageTags>
+    <NeutralLanguage>pt-BR</NeutralLanguage>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <PackageProjectUrl>http://www.afonsoft.com.br</PackageProjectUrl>
+    <AssemblyVersion>2019.8.5</AssemblyVersion>
+    <FileVersion>2019.8.5</FileVersion>
+    <Version>2019.8.5</Version>
+    <RepositoryUrl>https://github.com/afonsoft/Afonsoft.EFCore</RepositoryUrl>
+    <PackageLicenseUrl></PackageLicenseUrl>
+    <Description>ADO.NET for SQLite, MySQL, Oracle, SQLServer e PostgreSQL</Description>
+    <LangVersion>default</LangVersion>
+    <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <ContentSQLiteInteropFiles>true</ContentSQLiteInteropFiles>
+    <CopySQLiteInteropFiles>false</CopySQLiteInteropFiles>
+    <CleanSQLiteInteropFiles>false</CleanSQLiteInteropFiles>
+    <CollectSQLiteInteropFiles>false</CollectSQLiteInteropFiles>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Afonsoft.Extensions" Version="2019.8.5" />
+    <PackageReference Include="MySql.Data" Version="8.0.17" />
+    <PackageReference Include="Npgsql" Version="4.0.8" />    
+    <PackageReference Include="SQLite" Version="3.13.0" />    
+    <PackageReference Include="System.Data.DataSetExtensions" Version="4.5.0" />    
+    <PackageReference Include="System.Data.Odbc" Version="4.5.0" />
+    <PackageReference Include="System.Data.SqlClient" Version="4.6.1" />
+    <PackageReference Include="System.Data.SQLite" Version="1.0.111" />
+  </ItemGroup>
+  <ItemGroup Condition=" '$(TargetFramework)' == 'net47' ">
+    <PackageReference Include="Oracle.ManagedDataAccess" Version="19.3.1" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="x64\SQLite.Interop.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="x86\SQLite.Interop.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+</Project>
