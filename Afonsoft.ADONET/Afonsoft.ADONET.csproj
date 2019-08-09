@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>netstandard2.0;Net47</TargetFrameworks>
+    <TargetFrameworks>netstandard2.0;Net47;netcoreapp2.0</TargetFrameworks>
     <AssemblyName>Afonsoft.ADONET</AssemblyName>
     <Authors>Afonso Dutra Nogueira Filho</Authors>
     <Company>Afonsoft</Company>
@@ -31,16 +31,27 @@
   <ItemGroup>
     <PackageReference Include="Afonsoft.Extensions" Version="2019.8.5" />
     <PackageReference Include="MySql.Data" Version="8.0.17" />
-    <PackageReference Include="Npgsql" Version="4.0.8" />    
+    <PackageReference Include="Npgsql" Version="4.0.8" />
+   
     <PackageReference Include="SQLite" Version="3.13.0" />    
     <PackageReference Include="System.Data.DataSetExtensions" Version="4.5.0" />    
     <PackageReference Include="System.Data.Odbc" Version="4.5.0" />
     <PackageReference Include="System.Data.SqlClient" Version="4.6.1" />
     <PackageReference Include="System.Data.SQLite" Version="1.0.111" />
   </ItemGroup>
+  
   <ItemGroup Condition=" '$(TargetFramework)' == 'net47' ">
     <PackageReference Include="Oracle.ManagedDataAccess" Version="19.3.1" />
   </ItemGroup>
+  
+  <ItemGroup Condition=" '$(TargetFramework)' == 'netstandard2.0' ">
+    <PackageReference Include="Oracle.ManagedDataAccess.Core" Version="2.19.31" />
+  </ItemGroup>
+  
+  <ItemGroup Condition=" '$(TargetFramework)' == 'netcoreapp2.0' ">
+    <PackageReference Include="Oracle.ManagedDataAccess.Core" Version="2.19.31" />
+  </ItemGroup>
+  
   <ItemGroup>
     <Content Include="x64\SQLite.Interop.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

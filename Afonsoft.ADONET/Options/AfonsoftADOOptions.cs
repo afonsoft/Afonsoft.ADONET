@@ -61,7 +61,7 @@ namespace Afonsoft.ADONET.Options
         /// </summary>
         PostgreSQL = 4,
         /// <summary>
-        /// Oracle Only in FW >= 4.6.1 Not working in Core.Net
+        /// Oracle
         /// </summary>
         Oracle = 5
     }

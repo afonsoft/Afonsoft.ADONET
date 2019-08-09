@@ -1,8 +1,5 @@
 ﻿using Afonsoft.ADONET.Interfaces;
-using System;
-using System.Collections.Generic;
 using System.Data;
-using MySql.Data;
 
 namespace Afonsoft.ADONET.Providers
 {
