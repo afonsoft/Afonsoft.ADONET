@@ -279,7 +279,7 @@ namespace Afonsoft.ADONET
             {
                 DataSet ds = new DataSet();
 
-                using (IDbCommand cd = _sqlProvider.CreateCommand())
+                using (var cd = _sqlProvider.CreateCommand())
                 {
                     ExistConnection();
                     cd.Connection = DbConnection;
@@ -292,7 +292,7 @@ namespace Afonsoft.ADONET
                     //Adicionar os paramentros
                     if (param != null)
                         AttachParameters(cd, param);
-                    IDataAdapter da = _sqlProvider.CreateDataAdapter(cd);
+                    var da = _sqlProvider.CreateDataAdapter(cd);
                     IsCloseOpenConnection();
                     da.Fill(ds);
                 }
@@ -318,7 +318,7 @@ namespace Afonsoft.ADONET
         {
             try
             {
-                using (IDbCommand cd = _sqlProvider.CreateCommand())
+                using (var cd = _sqlProvider.CreateCommand())
                 {
                     ExistConnection();
                     cd.Connection = DbConnection;
@@ -356,7 +356,7 @@ namespace Afonsoft.ADONET
         {
             try
             {
-                using (IDbCommand cd = _sqlProvider.CreateCommand())
+                using (var cd = _sqlProvider.CreateCommand())
                 {
                     ExistConnection();
                     cd.Connection = DbConnection;
@@ -395,7 +395,7 @@ namespace Afonsoft.ADONET
         {
             try
             {
-                using (IDbCommand cd = _sqlProvider.CreateCommand())
+                using (var cd = _sqlProvider.CreateCommand())
                 {
                     ExistConnection();
                     cd.Connection = DbConnection;
@@ -433,7 +433,7 @@ namespace Afonsoft.ADONET
         #region  ExecuteQuery<T>
         public IEnumerator<T> ExecuteQuery<T>(string query, CommandType commandType, IDataParameter[] param)
         {
-            IDataReader reader = ExecuteReader(query, commandType, param);
+            var reader = ExecuteReader(query, commandType, param);
 
             int nuReg = 0;
 
