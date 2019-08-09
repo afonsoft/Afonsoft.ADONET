@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Threading.Tasks;
 
 namespace Afonsoft.ADONET.Interfaces
 {
@@ -70,6 +71,10 @@ namespace Afonsoft.ADONET.Interfaces
         /// RollbackTransaction
         /// </summary>
         bool RollbackTransaction();
+        
+        #endregion
+
+        #region Execute
 
         /// <summary>
         /// ExecuteNoQuery
@@ -83,6 +88,7 @@ namespace Afonsoft.ADONET.Interfaces
         /// ExecuteNoQuery
         /// </summary>
         void ExecuteNoQuery(string query);
+
 
         /// <summary>
         /// ExecuteQuery
@@ -135,8 +141,51 @@ namespace Afonsoft.ADONET.Interfaces
         /// ExecuteScalar
         /// </summary>
         object ExecuteScalar(string query);
+        #endregion
+
+        #region Async
+        /// <summary>
+        /// ExecuteNoQuery
+        /// </summary>
+        Task ExecuteNoQueryAsync(string query, CommandType commandType, IDataParameter[] param);
+        /// <summary>
+        /// ExecuteNoQuery
+        /// </summary>
+        Task ExecuteNoQueryAsync(string query, CommandType commandType);
+        /// <summary>
+        /// ExecuteNoQuery
+        /// </summary>
+        Task ExecuteNoQueryAsync(string query);
+
+        /// <summary>
+        /// ExecuteQuery
+        /// </summary>
+        Task<IEnumerator<T>> ExecuteQueryAsync<T>(string query, CommandType commandType, IDataParameter[] param);
+        /// <summary>
+        /// ExecuteQuery
+        /// </summary>
+        Task<IEnumerator<T>> ExecuteQueryAsync<T>(string query, CommandType commandType);
+        /// <summary>
+        /// ExecuteQuery
+        /// </summary>
+        Task<IEnumerator<T>> ExecuteQueryAsync<T>(string query);
+
+
+        /// <summary>
+        /// ExecuteQuery
+        /// </summary>
+        Task<DataSet> ExecuteQueryAsync(string query, CommandType commandType, IDataParameter[] param);
+        /// <summary>
+        /// ExecuteQuery
+        /// </summary>
+        Task<DataSet> ExecuteQueryAsync(string query, CommandType commandType);
+        /// <summary>
+        /// ExecuteQuery
+        /// </summary>
+        Task<DataSet> ExecuteQueryAsync(string query);
 
         #endregion
+
     }
 
 }

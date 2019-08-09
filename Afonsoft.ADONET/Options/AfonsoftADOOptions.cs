@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Data;
 
 namespace Afonsoft.ADONET.Options
 {
@@ -8,6 +9,7 @@ namespace Afonsoft.ADONET.Options
         /// Provider
         /// </summary>
         public EnumProvider Provider { get; set; } = EnumProvider.Unknown;
+        
         /// <summary>
         /// ConnectionString
         /// </summary>
@@ -15,10 +17,22 @@ namespace Afonsoft.ADONET.Options
 
         /// <summary>
         /// Open and Close Automatic connection befor command
+        /// Default: false
         /// </summary>
         public bool AutoOpenAndCloseConnection { get; set; } = false;
 
+        /// <summary>
+        /// Timeout
+        /// Default: 360
+        /// </summary>
         public int Timeout { get; set; } = 360;
+
+        /// <summary>
+        /// TransactionLevel
+        /// Default: Snapshot
+        /// </summary>
+        public IsolationLevel TransactionLevel { get; set; } = IsolationLevel.Snapshot;
+
     }
 
     /// <summary>
@@ -47,7 +61,7 @@ namespace Afonsoft.ADONET.Options
         /// </summary>
         PostgreSQL = 4,
         /// <summary>
-        /// Oracle
+        /// Oracle Only in FW >= 4.6.1 Not working in Core.Net
         /// </summary>
         Oracle = 5
     }

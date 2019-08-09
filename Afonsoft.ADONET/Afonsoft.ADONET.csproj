@@ -11,9 +11,9 @@
     <NeutralLanguage>pt-BR</NeutralLanguage>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageProjectUrl>http://www.afonsoft.com.br</PackageProjectUrl>
-    <AssemblyVersion>2019.8.5</AssemblyVersion>
-    <FileVersion>2019.8.5</FileVersion>
-    <Version>2019.8.5</Version>
+    <AssemblyVersion>2019.8.9</AssemblyVersion>
+    <FileVersion>2019.8.9</FileVersion>
+    <Version>2019.8.9</Version>
     <RepositoryUrl>https://github.com/afonsoft/Afonsoft.ADONET</RepositoryUrl>
     <PackageLicenseUrl></PackageLicenseUrl>
     <Description>ADO.NET for SQLite, MySQL, Oracle, SQLServer e PostgreSQL</Description>

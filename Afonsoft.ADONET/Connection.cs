@@ -5,15 +5,16 @@ using System.Collections.Generic;
 using System.Data;
 using System.Reflection;
 using Afonsoft.Extensions;
+using System.Threading.Tasks;
 
 namespace Afonsoft.ADONET
 {
     public class Connection : ISqlConn
     {
         private readonly ISqlProvider _sqlProvider;
-        private readonly IDbConnection _conn;
         private readonly AfonsoftADOOptions _options;
         private IDbTransaction _transaction;
+        public IDbConnection DbConnection { get; private set; }
 
         private static AfonsoftADOOptions Build(Action<AfonsoftADOOptions> options)
         {
@@ -26,7 +27,7 @@ namespace Afonsoft.ADONET
         {
             _options = Build(options);
             _sqlProvider = GetProvider(_options.Provider);
-            _conn = _sqlProvider.Connection;
+            DbConnection = _sqlProvider.Connection;
             ExistConnection();
         }
 
@@ -92,7 +93,7 @@ namespace Afonsoft.ADONET
 
         private void ExistConnection()
         {
-            if (_conn == null || string.IsNullOrEmpty(_options.ConnectionString))
+            if (DbConnection == null || string.IsNullOrEmpty(_options.ConnectionString))
             {
                 throw new Exception("Não existe uma string de conexão. (There is a no connection string.)");
             }
@@ -107,7 +108,7 @@ namespace Afonsoft.ADONET
             get
             {
                 ExistConnection();
-                return _conn.State == ConnectionState.Open;
+                return DbConnection.State == ConnectionState.Open;
             }
         }
 
@@ -116,7 +117,7 @@ namespace Afonsoft.ADONET
             get
             {
                 ExistConnection();
-                return _conn.State == ConnectionState.Closed;
+                return DbConnection.State == ConnectionState.Closed;
             }
         }
 
@@ -125,7 +126,7 @@ namespace Afonsoft.ADONET
             get
             {
                 ExistConnection();
-                return _conn.State;
+                return DbConnection.State;
             }
         }
 
@@ -134,13 +135,11 @@ namespace Afonsoft.ADONET
             get
             {
                 if (IsOpen)
-                    return _conn.Database;
+                    return DbConnection.Database;
                 else
                     return "";
             }
         }
-
-        public IDbConnection DbConnection => _conn;
 
         public IDbCommand CreateCommand()
         {
@@ -168,7 +167,7 @@ namespace Afonsoft.ADONET
         {
             if (_transaction == null && IsOpen)
             {
-                _transaction = _conn.BeginTransaction(IsolationLevel.ReadCommitted);
+                _transaction = DbConnection.BeginTransaction(_options.TransactionLevel);
                 return true;
             }
             else
@@ -179,7 +178,7 @@ namespace Afonsoft.ADONET
         {
             if (_transaction == null && IsOpen)
             {
-                _transaction = _conn.BeginTransaction(level);
+                _transaction = DbConnection.BeginTransaction(level);
                 return true;
             }
             else
@@ -189,11 +188,11 @@ namespace Afonsoft.ADONET
         public bool CloseConnection()
         {
 
-            if (_conn != null)
-                if (_conn.State != ConnectionState.Closed)
+            if (DbConnection != null)
+                if (DbConnection.State != ConnectionState.Closed)
                 {
                     CommitTransaction();
-                    _conn.Close();
+                    DbConnection.Close();
                 }
             return true;
 
@@ -208,13 +207,16 @@ namespace Afonsoft.ADONET
                 return true;
             }
             else
+            {
+                _transaction = null;
                 return false;
+            }
         }
 
         public bool OpenConnection()
         {
-            if (_conn.State == ConnectionState.Closed)
-                _conn.Open();
+            if (DbConnection.State == ConnectionState.Closed)
+                DbConnection.Open();
             return true;
         }
 
@@ -227,7 +229,10 @@ namespace Afonsoft.ADONET
                 return true;
             }
             else
+            {
+                _transaction = null;
                 return false;
+            }
         }
 
         private void IsCloseOpenConnection()
@@ -248,11 +253,11 @@ namespace Afonsoft.ADONET
         {
             try
             {
-                if (_conn != null)
+                if (DbConnection != null)
                 {
                     CommitTransaction();
                     CloseConnection();
-                    _conn.Dispose();
+                    DbConnection.Dispose();
                 }
             }
             catch (Exception)
@@ -277,7 +282,7 @@ namespace Afonsoft.ADONET
                 using (IDbCommand cd = _sqlProvider.CreateCommand())
                 {
                     ExistConnection();
-                    cd.Connection = _conn;
+                    cd.Connection = DbConnection;
                     cd.CommandText = query;
                     cd.CommandType = commandType;
                     cd.CommandTimeout = _options.Timeout;
@@ -316,7 +321,7 @@ namespace Afonsoft.ADONET
                 using (IDbCommand cd = _sqlProvider.CreateCommand())
                 {
                     ExistConnection();
-                    cd.Connection = _conn;
+                    cd.Connection = DbConnection;
                     cd.CommandText = query;
                     cd.CommandType = commandType;
                     cd.CommandTimeout = _options.Timeout;
@@ -354,7 +359,7 @@ namespace Afonsoft.ADONET
                 using (IDbCommand cd = _sqlProvider.CreateCommand())
                 {
                     ExistConnection();
-                    cd.Connection = _conn;
+                    cd.Connection = DbConnection;
                     cd.CommandText = query;
                     cd.CommandType = commandType;
                     cd.CommandTimeout = _options.Timeout;
@@ -393,7 +398,7 @@ namespace Afonsoft.ADONET
                 using (IDbCommand cd = _sqlProvider.CreateCommand())
                 {
                     ExistConnection();
-                    cd.Connection = _conn;
+                    cd.Connection = DbConnection;
                     cd.CommandText = query;
                     cd.CommandType = commandType;
                     cd.CommandTimeout = _options.Timeout;
@@ -462,6 +467,58 @@ namespace Afonsoft.ADONET
             return ExecuteQuery<T>(query, CommandType.Text, null);
         }
         #endregion
+
+
+        public Task ExecuteNoQueryAsync(string query, CommandType commandType, IDataParameter[] param)
+        {
+            return Task.Run(()=> {
+                ExecuteNoQuery(query, commandType, param);
+            });
+        }
+
+        public Task ExecuteNoQueryAsync(string query, CommandType commandType)
+        {
+            return ExecuteNoQueryAsync(query, commandType, null);
+        }
+
+        public Task ExecuteNoQueryAsync(string query)
+        {
+            return ExecuteNoQueryAsync(query, CommandType.Text, null);
+        }
+
+        public Task<IEnumerator<T>> ExecuteQueryAsync<T>(string query, CommandType commandType, IDataParameter[] param)
+        {
+            return Task.Run<IEnumerator<T>>(()=> {
+                return ExecuteQuery<T>(query, commandType, param);
+            });
+        }
+
+        public Task<IEnumerator<T>> ExecuteQueryAsync<T>(string query, CommandType commandType)
+        {
+            return ExecuteQueryAsync<T>(query, commandType, null);
+        }
+
+        public Task<IEnumerator<T>> ExecuteQueryAsync<T>(string query)
+        {
+            return ExecuteQueryAsync<T>(query, CommandType.Text, null);
+        }
+
+        public Task<DataSet> ExecuteQueryAsync(string query, CommandType commandType, IDataParameter[] param)
+        {
+            return Task.Run<DataSet>(() => {
+                return ExecuteQuery(query, commandType, param);
+            });
+        }
+
+        public Task<DataSet> ExecuteQueryAsync(string query, CommandType commandType)
+        {
+            return ExecuteQueryAsync(query, commandType, null);
+        }
+
+        public Task<DataSet> ExecuteQueryAsync(string query)
+        {
+            return ExecuteQueryAsync(query, CommandType.Text, null);
+        }
 
     }
 }
