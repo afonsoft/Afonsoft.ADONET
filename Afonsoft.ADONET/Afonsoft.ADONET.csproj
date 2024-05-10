@@ -31,7 +31,7 @@
   <ItemGroup>
     <PackageReference Include="Afonsoft.Extensions" Version="2019.8.5" />
     <PackageReference Include="MySql.Data" Version="8.0.17" />
-    <PackageReference Include="Npgsql" Version="4.0.8" />
+    <PackageReference Include="Npgsql" Version="4.0.14" />
    
     <PackageReference Include="SQLite" Version="3.13.0" />    
     <PackageReference Include="System.Data.DataSetExtensions" Version="4.5.0" />    
